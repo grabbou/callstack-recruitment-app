@@ -11,6 +11,7 @@ export default class PostsTable extends Component {
 			sort: 0,
 			desc: false
 		};
+		this.sortCache = [];
 		this.columns = [
 			'ID',
 			'User name',
@@ -47,35 +48,34 @@ export default class PostsTable extends Component {
 		
 	}
 
-	get posts() {
-		const start = (this.props.activePage - 1) * this.props.rows;
-		const end = start + this.props.rows;
-		return this.props.posts
-			.sort((a, b) => {
-				let cmp = 0;
+
+	getSortedPosts() {
+		if(!this.sortCache[this.state.sort]) {
+			this.sortCache[this.state.sort] = this.props.posts.slice(0).sort((a, b) => {
 				switch(this.state.sort) {
 					case 0:
 					default:
-						cmp = this.sortingMethods.numberComparator(a.id, b.id);
-						break;
+						return this.sortingMethods.numberComparator(a.id, b.id);
 					case 1:
-						cmp = this.sortingMethods.stringComparator(a.username, b.username);
-						break;
+						return this.sortingMethods.stringComparator(a.username, b.username);
 					case 2:
-						cmp = this.sortingMethods.stringComparator(a.postTitle, b.postTitle);
-						break;
+						return this.sortingMethods.stringComparator(a.postTitle, b.postTitle);
 					case 3:
-						cmp = this.sortingMethods.numberComparator(a.views, b.views);
-						break;
+						return this.sortingMethods.numberComparator(a.views, b.views);
 					case 4:
-						cmp = this.sortingMethods.numberComparator(a.likes, b.likes);
-						break;
+						return this.sortingMethods.numberComparator(a.likes, b.likes);
 					case 5:
-						cmp = this.sortingMethods.dateComparator(a.createdAt, b.createdAt);
-						break;
+						return this.sortingMethods.dateComparator(a.createdAt, b.createdAt);
 				}
-				return cmp * (this.state.desc ? -1 : 1);
-			})
+			});
+		}
+		return  this.state.desc ? this.sortCache[this.state.sort].slice(0).reverse() : this.sortCache[this.state.sort];
+	}
+
+	get posts() {
+		const start = (this.props.activePage - 1) * this.props.rows;
+		const end = start + this.props.rows;
+		return this.getSortedPosts()
 			.slice(start, end)
 			.map((post, index) => {
 				if (post.username === this.props.activeUser) {

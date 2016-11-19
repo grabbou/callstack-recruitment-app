@@ -39,8 +39,12 @@ class App extends Component {
 	}
 
 	changeRenderRows(event) {
+		const renderRows = +event.target.value;
+		// TODO: think this through.
+		const activePage = Math.round(this.state.renderRows / renderRows * this.state.activePage);
 		this.setState({
-			renderRows: +event.target.value
+			renderRows,
+			activePage
 		});
 	}
 
