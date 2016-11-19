@@ -33,7 +33,7 @@ export default class PostsTable extends Component {
 		};
 	}
 
-	setSort(index) {
+	sortOnChangeHandler(index) {
 		if (this.state.sort === index) {
 			this.setState({
 				desc: !this.state.desc
@@ -47,7 +47,7 @@ export default class PostsTable extends Component {
 		
 	}
 
-	get posts() {
+	preparePosts() {
 		const start = (this.props.activePage - 1) * this.props.rows;
 		const end = start + this.props.rows;
 		return this.props.posts
@@ -92,10 +92,10 @@ export default class PostsTable extends Component {
 					sort={this.state.sort}
 					desc={this.state.desc}
 					columns={this.columns}
-					onChange={this.setSort.bind(this)}
+					onChange={this.sortOnChangeHandler.bind(this)}
 				/>
 				<tbody>
-					{this.posts}
+					{this.preparePosts()}
 				</tbody>
 			</Table>
 		);

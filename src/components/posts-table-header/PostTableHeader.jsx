@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 export default class PostsTableHeader extends Component {
-	setSort(index) {
+	onClickHandler(index) {
 		this.props.onChange(index);
 	}
 
@@ -14,7 +14,7 @@ export default class PostsTableHeader extends Component {
 			<th
 				key={index}
 				className={index === this.props.sort ? 'boldify_it' : ''}
-				onClick={this.setSort.bind(this, index)}
+				onClick={this.onClickHandler.bind(this, index)}
 			>
 				{name}
 				<span
