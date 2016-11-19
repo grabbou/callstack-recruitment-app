@@ -9,6 +9,7 @@ import { RestClient } from './rest-client/RestClient';
 import RowSelector from './components/row-selector/RowSelector';
 import Pagination from './components/pagination/Pagination';
 import PostsTable from './components/posts-table/PostsTable';
+import NewPost from './components/new-post/NewPost';
 
 
 class App extends Component {
@@ -66,6 +67,17 @@ class App extends Component {
 		});
 	}
 
+	newPostOnSubmitHandler(value) {
+		this.rawPosts = [value].concat(this.rawPosts.map((post) => {
+			post.id++;
+			return post;
+		}));
+		this.setState({
+			posts: this.filterPosts(this.state.usernameFilter)
+		});
+		this._api.insertPost(value);
+	}
+
 	get appBody() {
 		return this.state.fetching ? (
 			<div className="">
@@ -89,6 +101,7 @@ class App extends Component {
 							value={this.state.renderRows}
 							onChange={this.rowSelectorOnChangeHandler.bind(this)}
 						/>
+						<NewPost onSubmit={this.newPostOnSubmitHandler.bind(this)}/>
 					</Col>
 				</Row>
 				<Row className="show-grid">
