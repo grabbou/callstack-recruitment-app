@@ -9,7 +9,7 @@ export default class PostsTable extends Component {
 		// rows posts activePage activeUser
 		this.state = {
 			sort: 0,
-			desc: true
+			desc: false
 		};
 		this.columns = [
 			'ID',
@@ -19,6 +19,18 @@ export default class PostsTable extends Component {
 			'Likes',
 			'Created at'
 		];
+		this.sortingMethods = {
+			numberComparator(a, b) {
+				return a - b;
+			},
+			stringComparator(a, b) {
+				// TODO: check if it's sorting correctly.
+				return a.localeCompare(b);
+			},
+			dateComparator(a, b) {
+				return a.getTime() - b.getTime();
+			}
+		};
 	}
 
 	setSort(index) {
@@ -29,7 +41,7 @@ export default class PostsTable extends Component {
 		} else {
 			this.setState({
 				sort: index,
-				desc: true
+				desc: false
 			});
 		}
 		
@@ -39,6 +51,31 @@ export default class PostsTable extends Component {
 		const start = (this.props.activePage - 1) * this.props.rows;
 		const end = start + this.props.rows;
 		return this.props.posts
+			.sort((a, b) => {
+				let cmp = 0;
+				switch(this.state.sort) {
+					case 0:
+					default:
+						cmp = this.sortingMethods.numberComparator(a.id, b.id);
+						break;
+					case 1:
+						cmp = this.sortingMethods.stringComparator(a.username, b.username);
+						break;
+					case 2:
+						cmp = this.sortingMethods.stringComparator(a.postTitle, b.postTitle);
+						break;
+					case 3:
+						cmp = this.sortingMethods.numberComparator(a.views, b.views);
+						break;
+					case 4:
+						cmp = this.sortingMethods.numberComparator(a.likes, b.likes);
+						break;
+					case 5:
+						cmp = this.sortingMethods.dateComparator(a.createdAt, b.createdAt);
+						break;
+				}
+				return cmp * (this.state.desc ? -1 : 1);
+			})
 			.slice(start, end)
 			.map((post, index) => {
 				if (post.username === this.props.activeUser) {

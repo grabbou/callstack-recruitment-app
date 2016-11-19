@@ -24,8 +24,8 @@ export class RestClient {
 						id: id++,
 						username: `${identity.name} ${identity.surname}`,
 						postTitle: `I say: ${identity.region} is awesome!`,
-						views: identity.age,
-						likes: identity.age * 2,
+						views: identity.age * 2,
+						likes: identity.age,
 						createdAt: new Date(identity.birthday.mdy)
 					}
 				})
