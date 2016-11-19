@@ -4,7 +4,7 @@ export class RestClient {
 
 	getPosts() {
 		const identityPromises = [];
-		let id = 0;
+		let id = 1;
 
 		for(let i = 0; i < 120; i++) {
 			identityPromises.push(

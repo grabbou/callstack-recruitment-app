@@ -5,9 +5,10 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import logo from './logo.svg';
 import './App.css';
 
-import {RestClient} from './rest-client/RestClient';
+import { RestClient } from './rest-client/RestClient';
 import RowSelector from './components/row-selector/RowSelector';
 import Pagination from './components/pagination/Pagination';
+import PostsTable from './components/posts-table/PostsTable';
 
 
 class App extends Component {
@@ -39,7 +40,7 @@ class App extends Component {
 
 	changeRenderRows(event) {
 		this.setState({
-			renderRows: event.target.value
+			renderRows: +event.target.value
 		});
 	}
 
@@ -63,6 +64,16 @@ class App extends Component {
 						<RowSelector
 							value={this.state.renderRows}
 							onChange={this.changeRenderRows.bind(this)}
+						/>
+					</Col>
+				</Row>
+				<Row className="show-grid">
+					<Col xs={12}>
+						<PostsTable
+							rows={this.state.renderRows}
+							posts={this.state.posts}
+							activePage={this.state.activePage}
+							activeUser={this.state.activeUser}
 						/>
 					</Col>
 				</Row>
