@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import {RestClient} from './rest-client/RestClient';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
+import { Grid, Row, Col } from 'react-bootstrap';
 import logo from './logo.svg';
 import './App.css';
+
+import {RestClient} from './rest-client/RestClient';
 import RowSelector from './components/row-selector/RowSelector';
-import { Grid, Row, Col } from 'react-bootstrap';
+import Pagination from './components/pagination/Pagination';
+
 
 class App extends Component {
 	constructor() {
@@ -15,7 +18,8 @@ class App extends Component {
 			activeUser: 'n/a',
 			fetching: true,
 			posts: [],
-			renderRows: 5
+			renderRows: 5,
+			activePage: 1
 		};
 	}
 
@@ -39,6 +43,12 @@ class App extends Component {
 		});
 	}
 
+	selectActivePage(value) {
+		this.setState({
+			activePage: value
+		});
+	}
+
 	get appBody() {
 		return this.state.fetching ? (
 			<div className="">
@@ -53,6 +63,16 @@ class App extends Component {
 						<RowSelector
 							value={this.state.renderRows}
 							onChange={this.changeRenderRows.bind(this)}
+						/>
+					</Col>
+				</Row>
+				<Row className="show-grid">
+					<Col xs={12}>
+						<Pagination
+							activePage={this.state.activePage}
+							rows={this.state.renderRows}
+							items={this.state.posts.length}
+							onSelect={this.selectActivePage.bind(this)}
 						/>
 					</Col>
 				</Row>
