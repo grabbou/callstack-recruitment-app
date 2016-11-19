@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import {RestClient} from './rest-client/RestClient.js';
+import {RestClient} from './rest-client/RestClient';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
 import logo from './logo.svg';
 import './App.css';
+import RowSelector from './components/row-selector/RowSelector';
+import { Grid, Row, Col } from 'react-bootstrap';
 
 class App extends Component {
 	constructor() {
@@ -10,7 +14,8 @@ class App extends Component {
 		this.state = {
 			activeUser: 'n/a',
 			fetching: true,
-			posts: []
+			posts: [],
+			renderRows: 5
 		};
 	}
 
@@ -28,6 +33,12 @@ class App extends Component {
 		});
 	}
 
+	changeRenderRows(event) {
+		this.setState({
+			renderRows: event.target.value
+		});
+	}
+
 	get appBody() {
 		return this.state.fetching ? (
 			<div className="">
@@ -35,7 +46,16 @@ class App extends Component {
 			</div>
 		) : (
 			<div className="">
-				Done
+				<Row className="show-grid">
+					<Col xs={12} md={8}>
+					</Col>
+					<Col xs={12} md={4}>
+						<RowSelector
+							value={this.state.renderRows}
+							onChange={this.changeRenderRows.bind(this)}
+						/>
+					</Col>
+				</Row>
 			</div>
 		);
 	}
@@ -43,7 +63,9 @@ class App extends Component {
 	render() {
 		return (
 			<div className="App">
-				{this.appBody}
+				<Grid>
+					{this.appBody}
+				</Grid>
 			</div>
 		);
 	}
