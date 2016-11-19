@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Row, Col, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import logo from './logo.svg';
 import './App.css';
 
@@ -15,22 +15,25 @@ class App extends Component {
 	constructor() {
 		super();
 		this._api = new RestClient();
+		this.rawPosts = [];
 		this.state = {
 			activeUser: 'n/a',
 			fetching: true,
 			posts: [],
 			renderRows: 5,
-			activePage: 1
+			activePage: 1,
+			usernameFilter: ''
 		};
 	}
 
 	componentWillMount() {
 		this._api.getPosts()
 		.then((posts) => {
+			this.rawPosts = posts;
 			this.setState({
 				activeUser: posts[59].username,
 				fetching: false,
-				posts
+				posts,
 			});
 		})
 		.catch((error) => {
@@ -38,15 +41,28 @@ class App extends Component {
 		});
 	}
 
-	changeRenderRows(event) {
+	filterPosts(filter = '') {
+		return filter.length
+			? this.rawPosts.filter((value) => value.username.startsWith(filter))
+			: this.rawPosts;
+	}
+
+	rowSelectorOnChangeHandler(event) {
 		this.setState({
 			renderRows: +event.target.value
 		});
 	}
 
-	selectActivePage(value) {
+	paginationOnSelectHandler(value) {
 		this.setState({
 			activePage: value
+		});
+	}
+
+	filterOnChangeHandler(event) {
+		this.setState({
+			usernameFilter: event.target.value,
+			posts: this.filterPosts(event.target.value)
 		});
 	}
 
@@ -59,11 +75,19 @@ class App extends Component {
 			<div className="">
 				<Row className="show-grid">
 					<Col xs={12} md={8}>
+						<FormGroup controlId="formBasicText">
+							<ControlLabel>Type username to filter posts</ControlLabel>
+							<FormControl
+								type="text"
+								value={this.state.usernameFilter}
+								onChange={this.filterOnChangeHandler.bind(this)}
+							/>
+						</FormGroup>
 					</Col>
 					<Col xs={12} md={4}>
 						<RowSelector
 							value={this.state.renderRows}
-							onChange={this.changeRenderRows.bind(this)}
+							onChange={this.rowSelectorOnChangeHandler.bind(this)}
 						/>
 					</Col>
 				</Row>
@@ -83,7 +107,7 @@ class App extends Component {
 							activePage={this.state.activePage}
 							rows={this.state.renderRows}
 							items={this.state.posts.length}
-							onSelect={this.selectActivePage.bind(this)}
+							onSelect={this.paginationOnSelectHandler.bind(this)}
 						/>
 					</Col>
 				</Row>
