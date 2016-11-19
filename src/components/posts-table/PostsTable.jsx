@@ -38,8 +38,14 @@ export default class PostsTable extends Component {
 	get posts() {
 		const start = (this.props.activePage - 1) * this.props.rows;
 		const end = start + this.props.rows;
-		console.log(`from ${start} to ${end}`);
-		return this.props.posts.slice(start, end);
+		return this.props.posts
+			.slice(start, end)
+			.map((post, index) => {
+				if (post.username === this.props.activeUser) {
+					return <PostTableRow key={index} item={post} highlight/>;
+				}
+				return <PostTableRow key={index} item={post} />
+			});
 	}
 
 	render() {
@@ -52,7 +58,7 @@ export default class PostsTable extends Component {
 					onChange={this.setSort.bind(this)}
 				/>
 				<tbody>
-					{this.posts.map((post, index) => <PostTableRow key={index} item={post} />)}
+					{this.posts}
 				</tbody>
 			</Table>
 		);

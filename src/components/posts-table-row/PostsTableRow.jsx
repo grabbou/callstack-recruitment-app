@@ -14,7 +14,7 @@ export default class PostsTableRow extends Component {
 
 	render() {
 		return (
-			<tr>
+			<tr style={this.props.highlight ? { backgroundColor: '#69e05e' } : {}}>
 				{this.body}
 			</tr>
 		);
