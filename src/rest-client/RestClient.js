@@ -4,7 +4,7 @@ export class RestClient {
 
 	getPosts() {
 		const identityPromises = [];
-		let id = 0;
+		let id = 1;
 
 		for(let i = 0; i < 120; i++) {
 			identityPromises.push(
@@ -24,8 +24,8 @@ export class RestClient {
 						id: id++,
 						username: `${identity.name} ${identity.surname}`,
 						postTitle: `I say: ${identity.region} is awesome!`,
-						views: identity.age,
-						likes: identity.age * 2,
+						views: identity.age * 2,
+						likes: identity.age,
 						createdAt: new Date(identity.birthday.mdy)
 					}
 				})
