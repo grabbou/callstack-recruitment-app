@@ -45,7 +45,9 @@ class App extends Component {
 
 	_filterPosts(filter = '') {
 		return filter.length
-			? this.rawPosts.filter((value) => value.username.toLowerCase().startsWith(filter))
+			? this.rawPosts.filter(
+				(value) => value.username.toLowerCase().startsWith(filter.toLowerCase())
+			)
 			: this.rawPosts;
 	}
 
