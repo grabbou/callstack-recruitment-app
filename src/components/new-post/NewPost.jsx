@@ -3,6 +3,7 @@ import { Button, Modal, Alert } from 'react-bootstrap';
 import TextInput from '../form-input/TextInput';
 import NumberInput from '../form-input/NumberInput';
 import propTypes from '../../lib/decorators/propTypes';
+import './NewPost.sass';
 
 @propTypes({
 	onSubmit: React.PropTypes.func.isRequired
@@ -104,12 +105,16 @@ export default class NewPost extends Component {
 	}
 
 	get _validationFeedback() {
-		return this.state.validateError ? <Alert bsStyle="danger">Invalid form data.</Alert> : null;
+		return this.state.validateError ? (
+			<Alert bsStyle="danger" className="NewPost__alert NewPost__alert--error">
+				Invalid form data.
+			</Alert>
+		) : null;
 	}
 
 	get _modal() {
 		return (
-			<Modal show={this.state.formOpen}>
+			<Modal show={this.state.formOpen} className="NewPost__modal">
 				<Modal.Header>
 					<Modal.Title>Add new post</Modal.Title>
 				</Modal.Header>
@@ -118,8 +123,19 @@ export default class NewPost extends Component {
 					{this._form}
 				</Modal.Body>
 				<Modal.Footer>
-					<Button onClick={this._toggleFormModal.bind(this)}>Cancel</Button>
-					<Button bsStyle="primary" onClick={this._onSubmitHandler.bind(this)}>Save</Button>
+					<Button
+						className="NewPost__button NewPost__button--default" 
+						onClick={this._toggleFormModal.bind(this)}
+					>
+						Cancel
+					</Button>
+					<Button
+						bsStyle="primary"
+						className="NewPost__button NewPost__button--primary" 
+						onClick={this._onSubmitHandler.bind(this)}
+					>
+						Save
+					</Button>
 				</Modal.Footer>
 			</Modal>
 		);
@@ -127,8 +143,13 @@ export default class NewPost extends Component {
 
 	render() {
 		return (
-			<section>
-				<Button onClick={this._toggleFormModal.bind(this)}>New post</Button>
+			<section className="NewPost">
+				<Button
+					className="NewPost__button NewPost__button--default"
+					onClick={this._toggleFormModal.bind(this)}
+				>
+					New post
+				</Button>
 				{this._modal}
 			</section>
 		);

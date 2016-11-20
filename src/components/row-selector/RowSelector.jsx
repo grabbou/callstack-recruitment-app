@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FormControl, FormGroup, ControlLabel, Form } from 'react-bootstrap';
 import propTypes from '../../lib/decorators/propTypes';
+import './RowSelector.sass';
 
 @propTypes({
 	value: React.PropTypes.number.isRequired,
@@ -9,10 +10,10 @@ import propTypes from '../../lib/decorators/propTypes';
 export default class RowSelector extends Component {
 	render() {
 		return (
-			<Form inline>
+			<Form inline className="RowSelector">
 				<FormGroup controlId="formControlsSelect">
-					<ControlLabel>Show rows:</ControlLabel>
-					<FormControl
+					<ControlLabel className="RowSelector__label">Show rows:</ControlLabel>
+					<FormControl className="RowSelector__selector"
 						componentClass="select"
 						value={this.props.value}
 						onChange={this.props.onChange}

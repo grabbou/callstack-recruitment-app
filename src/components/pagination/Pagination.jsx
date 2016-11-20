@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Pagination as BSPagination } from 'react-bootstrap';
 import propTypes from '../../lib/decorators/propTypes';
+import './Pagination.sass';
 
 @propTypes({
 	items: React.PropTypes.number.isRequired,
@@ -15,12 +16,14 @@ export default class Pagination extends Component {
 
 	render() {
 		return (
-			<BSPagination
-				bsSize="small"
-				items={this._itemsLength}
-				activePage={this.props.activePage}
-				onSelect={this.props.onSelect}
-			/>
+			<section className="Pagination">
+				<BSPagination
+					bsSize="small"
+					items={this._itemsLength}
+					activePage={this.props.activePage}
+					onSelect={this.props.onSelect}
+				/>
+			</section>
 		);
 	}
 }
