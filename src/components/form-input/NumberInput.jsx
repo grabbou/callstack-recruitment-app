@@ -42,7 +42,6 @@ export default class NumberInput extends Component {
 		const max = typeof this.props.max === 'number' ? this.props.max : Number.POSITIVE_INFINITY;
 		const shouldBeInteger = this.props.shouldBeInteger;
 		const value = Number.isNaN(number) ? this.state.value : number;
-		console.log(value);
 		return (
 			!isNaN(parseFloat(value)) && isFinite(value)
 			&& value >= min && value <= max
