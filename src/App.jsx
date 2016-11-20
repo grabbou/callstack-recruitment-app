@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-import { Grid, Row, Col, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import { Grid, Row, Col, FormGroup, FormControl, ControlLabel, Alert } from 'react-bootstrap';
 
 import { RestClient } from './rest-client/RestClient';
 import RowSelector from './components/row-selector/RowSelector';
@@ -38,13 +38,14 @@ class App extends Component {
 			});
 		})
 		.catch((error) => {
+			// TODO: proper error handler.
 			alert(error);
 		});
 	}
 
 	_filterPosts(filter = '') {
 		return filter.length
-			? this.rawPosts.filter((value) => value.username.startsWith(filter))
+			? this.rawPosts.filter((value) => value.username.toLowerCase().startsWith(filter))
 			: this.rawPosts;
 	}
 
@@ -72,7 +73,11 @@ class App extends Component {
 	}
 
 	_newPostOnSubmitHandler(value) {
-		const valid = this.rawPosts.findIndex((post) => {
+		let valid = value.username
+			&& value.postTitle
+			&& typeof value.views === 'number'
+			&& typeof value.likes === 'number';
+		valid = valid && this.rawPosts.findIndex((post) => {
 			return post.username === value.username && post.postTitle === value.postTitle;
 		}) === -1;
 
@@ -82,7 +87,7 @@ class App extends Component {
 				return post;
 			}));
 			this.setState({
-				posts: this.filterPosts(this.state.usernameFilter)
+				posts: this._filterPosts(this.state.usernameFilter)
 			});
 			this._api.insertPost(value);
 			return;
@@ -155,11 +160,11 @@ class App extends Component {
 			<div className="App">
 				<Grid>
 					{this.state.fetching ? (
-						<div className="">
+						<Alert bsStyle="info">
 							Fetching data...
-						</div>
+						</Alert>
 					) : (
-						<div className="">
+						<div>
 							{this._header}
 							{this._body}
 							{this._footer}
