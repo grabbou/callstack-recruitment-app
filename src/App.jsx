@@ -68,14 +68,22 @@ class App extends Component {
 	}
 
 	newPostOnSubmitHandler(value) {
-		this.rawPosts = [value].concat(this.rawPosts.map((post) => {
-			post.id++;
-			return post;
-		}));
-		this.setState({
-			posts: this.filterPosts(this.state.usernameFilter)
-		});
-		this._api.insertPost(value);
+		const valid = this.rawPosts.findIndex((post) => {
+			return post.username === value.username && post.postTitle === value.postTitle;
+		}) === -1;
+
+		if (valid) {
+			this.rawPosts = [value].concat(this.rawPosts.map((post) => {
+				post.id++;
+				return post;
+			}));
+			this.setState({
+				posts: this.filterPosts(this.state.usernameFilter)
+			});
+			this._api.insertPost(value);
+			return;
+		}
+		return !valid;
 	}
 
 	get appBody() {
