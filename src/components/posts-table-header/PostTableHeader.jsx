@@ -8,10 +8,11 @@ import propTypes from '../../lib/decorators/propTypes';
 	onChange: React.PropTypes.func.isRequired
 })
 export default class PostsTableHeader extends Component {
+	_onClickHandler(index) {
 		this.props.onChange(index);
 	}
 
-	renderColumn(name, index) {
+	_renderColumn(name, index) {
 		const iconClass = index === this.props.sort
 			? `glyphicon glyphicon-triangle-${this.props.desc ? 'bottom' : 'top'}`
 			: 'hide_it';
@@ -20,7 +21,7 @@ export default class PostsTableHeader extends Component {
 			<th
 				key={index}
 				className={index === this.props.sort ? 'boldify_it' : ''}
-				onClick={this.onClickHandler.bind(this, index)}
+				onClick={this._onClickHandler.bind(this, index)}
 			>
 				{name}
 				<span
@@ -35,7 +36,7 @@ export default class PostsTableHeader extends Component {
 		return (
 			<thead>
 				<tr>
-					{this.props.columns.map((col, index) => this.renderColumn(col, index))}
+					{this.props.columns.map((col, index) => this._renderColumn(col, index))}
 				</tr>
 			</thead>
 		);

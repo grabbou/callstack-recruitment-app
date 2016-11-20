@@ -9,7 +9,7 @@ import propTypes from '../../lib/decorators/propTypes';
 	onSelect: React.PropTypes.func.isRequired
 })
 export default class Pagination extends Component {
-	get itemsLength() {
+	get _itemsLength() {
 		return Math.ceil(this.props.items / this.props.rows);
 	}
 
@@ -17,7 +17,7 @@ export default class Pagination extends Component {
 		return (
 			<BSPagination
 				bsSize="small"
-				items={this.itemsLength}
+				items={this._itemsLength}
 				activePage={this.props.activePage}
 				onSelect={this.props.onSelect}
 			/>
