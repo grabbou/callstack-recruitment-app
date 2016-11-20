@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import { Grid, Row, Col, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
-import logo from './logo.svg';
 import './App.css';
 
 import { RestClient } from './rest-client/RestClient';
@@ -42,32 +41,32 @@ class App extends Component {
 		});
 	}
 
-	filterPosts(filter = '') {
+	_filterPosts(filter = '') {
 		return filter.length
 			? this.rawPosts.filter((value) => value.username.startsWith(filter))
 			: this.rawPosts;
 	}
 
-	rowSelectorOnChangeHandler(event) {
+	_rowSelectorOnChangeHandler(event) {
 		this.setState({
 			renderRows: +event.target.value
 		});
 	}
 
-	paginationOnSelectHandler(value) {
+	_paginationOnSelectHandler(value) {
 		this.setState({
 			activePage: value
 		});
 	}
 
-	filterOnChangeHandler(event) {
+	_filterOnChangeHandler(event) {
 		this.setState({
 			usernameFilter: event.target.value,
 			posts: this.filterPosts(event.target.value)
 		});
 	}
 
-	newPostOnSubmitHandler(value) {
+	_newPostOnSubmitHandler(value) {
 		const valid = this.rawPosts.findIndex((post) => {
 			return post.username === value.username && post.postTitle === value.postTitle;
 		}) === -1;
@@ -86,13 +85,10 @@ class App extends Component {
 		return !valid;
 	}
 
-	get appBody() {
-		return this.state.fetching ? (
-			<div className="">
-				Fetching data...
-			</div>
-		) : (
-			<div className="">
+	get _header() {
+		return (
+			<header>
+				Welcome <b>{this.state.activeUser}</b>!
 				<Row className="show-grid">
 					<Col xs={12} md={8}>
 						<FormGroup controlId="formBasicText">
@@ -100,39 +96,49 @@ class App extends Component {
 							<FormControl
 								type="text"
 								value={this.state.usernameFilter}
-								onChange={this.filterOnChangeHandler.bind(this)}
+								onChange={this._filterOnChangeHandler.bind(this)}
 							/>
 						</FormGroup>
 					</Col>
 					<Col xs={12} md={4}>
 						<RowSelector
 							value={this.state.renderRows}
-							onChange={this.rowSelectorOnChangeHandler.bind(this)}
+							onChange={this._rowSelectorOnChangeHandler.bind(this)}
 						/>
-						<NewPost onSubmit={this.newPostOnSubmitHandler.bind(this)}/>
+						<NewPost onSubmit={this._newPostOnSubmitHandler.bind(this)}/>
 					</Col>
 				</Row>
-				<Row className="show-grid">
-					<Col xs={12}>
-						<PostsTable
-							rows={this.state.renderRows}
-							posts={this.state.posts}
-							activePage={this.state.activePage}
-							activeUser={this.state.activeUser}
-						/>
-					</Col>
-				</Row>
-				<Row className="show-grid">
-					<Col xs={12}>
-						<Pagination
-							activePage={this.state.activePage}
-							rows={this.state.renderRows}
-							items={this.state.posts.length}
-							onSelect={this.paginationOnSelectHandler.bind(this)}
-						/>
-					</Col>
-				</Row>
-			</div>
+			</header>
+		);
+	}
+
+	get _body() {
+		return (
+			<Row className="show-grid">
+				<Col xs={12}>
+					<PostsTable
+						rows={this.state.renderRows}
+						posts={this.state.posts}
+						activePage={this.state.activePage}
+						activeUser={this.state.activeUser}
+					/>
+				</Col>
+			</Row>
+		);
+	}
+
+	get _footer() {
+		return (
+			<Row className="show-grid">
+				<Col xs={12}>
+					<Pagination
+						activePage={this.state.activePage}
+						rows={this.state.renderRows}
+						items={this.state.posts.length}
+						onSelect={this._paginationOnSelectHandler.bind(this)}
+					/>
+				</Col>
+			</Row>
 		);
 	}
 
@@ -140,7 +146,17 @@ class App extends Component {
 		return (
 			<div className="App">
 				<Grid>
-					{this.appBody}
+					{this.state.fetching ? (
+						<div className="">
+							Fetching data...
+						</div>
+					) : (
+						<div className="">
+							{this._header}
+							{this._body}
+							{this._footer}
+						</div>
+					)}
 				</Grid>
 			</div>
 		);

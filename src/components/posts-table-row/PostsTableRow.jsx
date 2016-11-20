@@ -6,7 +6,7 @@ import propTypes from '../../lib/decorators/propTypes';
 	highlight: React.PropTypes.bool
 })
 export default class PostsTableRow extends Component {
-	get body() {
+	get _body() {
 		return Object.values(this.props.item)
 		.map((value, index) => {
 			if (typeof value.getMonth === 'function') {
@@ -19,7 +19,7 @@ export default class PostsTableRow extends Component {
 	render() {
 		return (
 			<tr style={this.props.highlight ? { backgroundColor: '#69e05e' } : {}}>
-				{this.body}
+				{this._body}
 			</tr>
 		);
 	}
