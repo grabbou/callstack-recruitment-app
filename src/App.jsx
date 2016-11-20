@@ -11,6 +11,12 @@ import NewPost from './components/new-post/NewPost';
 
 import './App.sass';
 
+// TODO: move sorting here
+//       update state currentSort by passed to PostTable method
+//       update state desc by passed to PostTable method
+//       create new Sorter
+//       revers array returned from sorter results if state prop desc is true then, apply filter 
+//       invalidate sorter cache when prepending new post
 
 class App extends Component {
 	constructor() {
