@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { Button, Modal, Alert } from 'react-bootstrap';
 import TextInput from '../form-input/TextInput';
 import NumberInput from '../form-input/NumberInput';
+import propTypes from '../../lib/decorators/propTypes';
 
+@propTypes({
+	onSubmit: React.PropTypes.func.isRequired
+})
 export default class NewPost extends Component {
 	constructor(props) {
 		super(props);

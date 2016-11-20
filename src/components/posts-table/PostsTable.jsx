@@ -2,11 +2,17 @@ import React, { Component } from 'react';
 import { Table } from 'react-bootstrap';
 import PostTableHeader from '../posts-table-header/PostTableHeader';
 import PostTableRow from '../posts-table-row/PostsTableRow';
+import propTypes from '../../lib/decorators/propTypes';
 
+@propTypes({
+	rows: React.PropTypes.number.isRequired,
+	activePage: React.PropTypes.number.isRequired,
+	posts: React.PropTypes.array.isRequired,
+	activeUser: React.PropTypes.string
+})
 export default class PostsTable extends Component {
 	constructor(props) {
 		super(props);
-		// rows posts activePage activeUser
 		this.state = {
 			sort: 0,
 			desc: false

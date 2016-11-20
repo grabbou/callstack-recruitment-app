@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+import propTypes from '../../lib/decorators/propTypes';
 
+@propTypes({
+	item: React.PropTypes.object.isRequired,
+	highlight: React.PropTypes.bool
+})
 export default class PostsTableRow extends Component {
-	
 	get body() {
 		return Object.values(this.props.item)
 		.map((value, index) => {

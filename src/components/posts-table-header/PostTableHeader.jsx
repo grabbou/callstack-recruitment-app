@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
+import propTypes from '../../lib/decorators/propTypes';
 
+@propTypes({
+	sort: React.PropTypes.number.isRequired,
+	desc: React.PropTypes.bool.isRequired,
+	columns: React.PropTypes.array.isRequired,
+	onChange: React.PropTypes.func.isRequired
+})
 export default class PostsTableHeader extends Component {
-	onClickHandler(index) {
 		this.props.onChange(index);
 	}
 

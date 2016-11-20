@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { FormControl, FormGroup, ControlLabel, Form } from 'react-bootstrap';
+import propTypes from '../../lib/decorators/propTypes';
 
+@propTypes({
+	value: React.PropTypes.number.isRequired,
+	onChange: React.PropTypes.func.isRequired
+})
 export default class RowSelector extends Component {
 	render() {
 		return (
