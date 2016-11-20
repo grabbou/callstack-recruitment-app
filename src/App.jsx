@@ -49,8 +49,11 @@ class App extends Component {
 	}
 
 	_rowSelectorOnChangeHandler(event) {
+		let activePage = this.state.renderRows / event.target.value * this.state.activePage;
+		activePage = event.target.value > this.state.renderRows ? Math.ceil(activePage) : Math.floor(activePage); 
 		this.setState({
-			renderRows: +event.target.value
+			renderRows: +event.target.value,
+			activePage
 		});
 	}
 
@@ -63,7 +66,8 @@ class App extends Component {
 	_filterOnChangeHandler(event) {
 		this.setState({
 			usernameFilter: event.target.value,
-			posts: this._filterPosts(event.target.value)
+			posts: this._filterPosts(event.target.value),
+			activePage: 1
 		});
 	}
 
