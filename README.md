@@ -1,4 +1,4 @@
-### Working fulltime and having time only on weekend to complete this task I had to sacrifice unit tests.
+### Working fulltime and having time only on weekend to complete this task, I had to sacrifice unit tests.
 
 ## Available Scripts
 
