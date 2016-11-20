@@ -30,7 +30,6 @@ export default class PostsTable extends Component {
 				return a - b;
 			},
 			stringComparator(a, b) {
-				// TODO: check if it's sorting correctly.
 				return a.localeCompare(b);
 			},
 			dateComparator(a, b) {
