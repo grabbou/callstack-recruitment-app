@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import { Grid, Row, Col, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
-import './App.css';
 
 import { RestClient } from './rest-client/RestClient';
 import RowSelector from './components/row-selector/RowSelector';
 import Pagination from './components/pagination/Pagination';
 import PostsTable from './components/posts-table/PostsTable';
 import NewPost from './components/new-post/NewPost';
+
+import './App.sass';
 
 
 class App extends Component {
@@ -62,7 +63,7 @@ class App extends Component {
 	_filterOnChangeHandler(event) {
 		this.setState({
 			usernameFilter: event.target.value,
-			posts: this.filterPosts(event.target.value)
+			posts: this._filterPosts(event.target.value)
 		});
 	}
 
@@ -88,19 +89,22 @@ class App extends Component {
 	get _header() {
 		return (
 			<header>
-				Welcome <b>{this.state.activeUser}</b>!
-				<Row className="show-grid">
+				<div className="App__welcome-msg">
+					Welcome <b>{this.state.activeUser}</b>!
+				</div>
+				<Row className="show-grid App__flex-row">
 					<Col xs={12} md={8}>
 						<FormGroup controlId="formBasicText">
 							<ControlLabel>Type username to filter posts</ControlLabel>
 							<FormControl
 								type="text"
+								className="App__filter"
 								value={this.state.usernameFilter}
 								onChange={this._filterOnChangeHandler.bind(this)}
 							/>
 						</FormGroup>
 					</Col>
-					<Col xs={12} md={4}>
+					<Col xs={12} md={4} className="App__push-bottom">
 						<RowSelector
 							value={this.state.renderRows}
 							onChange={this._rowSelectorOnChangeHandler.bind(this)}

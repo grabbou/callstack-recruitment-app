@@ -1,0 +1,16 @@
+@import '../../styles/Button.sass'
+
+.NewPost
+	display: inline-block
+	&__button
+		@extend .Button
+		&--default
+			@extend .Button--default
+		&--primary
+			@extend .Button--primary
+	&__modal *
+		border-radius: 0
+		box-shadow: none
+	&__alert
+		border-radius: 0
+		background: #ffd0ce

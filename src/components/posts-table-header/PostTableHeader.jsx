@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import propTypes from '../../lib/decorators/propTypes';
+import './PostTableHeader.sass';
 
 @propTypes({
 	sort: React.PropTypes.number.isRequired,
@@ -15,12 +16,12 @@ export default class PostsTableHeader extends Component {
 	_renderColumn(name, index) {
 		const iconClass = index === this.props.sort
 			? `glyphicon glyphicon-triangle-${this.props.desc ? 'bottom' : 'top'}`
-			: 'hide_it';
+			: 'PostTableHeader__hidden';
 
 		return (
 			<th
 				key={index}
-				className={index === this.props.sort ? 'boldify_it' : ''}
+				className={`PostTableHeader__header ${index === this.props.sort ? 'PostTableHeader__header--active' : ''}`}
 				onClick={this._onClickHandler.bind(this, index)}
 			>
 				{name}
@@ -34,7 +35,7 @@ export default class PostsTableHeader extends Component {
 
 	render() {
 		return (
-			<thead>
+			<thead className="PostTableHeader">
 				<tr>
 					{this.props.columns.map((col, index) => this._renderColumn(col, index))}
 				</tr>
