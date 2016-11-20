@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import propTypes from '../../lib/decorators/propTypes';
 
+@propTypes({
+	value: React.PropTypes.number,
+	min: React.PropTypes.number,
+	max: React.PropTypes.number,
+	shouldBeInteger: React.PropTypes.bool,
+	onChange: React.PropTypes.func.isRequired,
+	children: React.PropTypes.node
+})
 export default class NumberInput extends Component {
 	constructor(props) {
 		super(props);
@@ -82,12 +91,3 @@ export default class NumberInput extends Component {
 		);
 	}
 }
-
-NumberInput.propTypes = {
-	value: React.PropTypes.number,
-	min: React.PropTypes.number,
-	max: React.PropTypes.number,
-	shouldBeInteger: React.PropTypes.bool,
-	onChange: React.PropTypes.func.isRequired,
-	children: React.PropTypes.node
-};

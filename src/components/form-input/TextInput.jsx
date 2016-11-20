@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import propTypes from '../../lib/decorators/propTypes';
 
+@propTypes({
+	value: React.PropTypes.string,
+	placeholder: React.PropTypes.string,
+	requiredLength: React.PropTypes.number,
+	onChange: React.PropTypes.func.isRequired,
+	children: React.PropTypes.node
+})
 export default class TextInput extends Component {
 	constructor(props) {
 		super(props);
@@ -66,11 +74,3 @@ export default class TextInput extends Component {
 		);
 	}
 }
-
-TextInput.propTypes = {
-	value: React.PropTypes.string,
-	placeholder: React.PropTypes.string,
-	requiredLength: React.PropTypes.number,
-	onChange: React.PropTypes.func.isRequired,
-	children: React.PropTypes.node
-};
